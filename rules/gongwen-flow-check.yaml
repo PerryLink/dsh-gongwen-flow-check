@@ -1,0 +1,176 @@
+# 公文流转与办理时限核对 规则库
+#
+# 规则数据与代码分离：替换本文件即可切换规则集版本，无需改动 TypeScript。
+#
+# 条款引用纪律（由 shared/ruleset.ts 强制校验）：
+#   - 每条规则必须写全 document / number / clause / excerpt / kind / source，
+#     且 excerpt 必须是逐字摘录，不得改写。
+#   - kind: direct                       条款直接规定了所检查的要求
+#   - kind: derived-from-principle       条款未直接规定，仅能由原则性条款推论（severity 最多 warn）
+#   - kind: institutional-configuration 阈值出自本机构配置（severity 最多 info）
+#
+# ⚠️⚠️ 本规则库的诚实说明：**excerpt 一律不是引文。**
+#   本插件核对的是"收文登记与办理环节台账"是否齐备、时限是否自洽。
+#   其规范载体包括《党政机关公文处理工作条例》（中办发〔2012〕14号）
+#   与《党政机关公文格式》（GB/T 9704-2012）。**核查未取得这些文件的逐字条文**，
+#   因此本规则库**不伪造任何"原文"**：每条规则的 excerpt 都写明"该条文本次未取得"，
+#   依据状态放在 note 里如实说明；kind 一律降为 derived-from-principle（封顶 warn）
+#   或 institutional-configuration（封顶 info）。
+#   **取得条文后必须做两件事**：把 excerpt 换成真正的逐字摘录，把 kind 升为 direct。
+#   在那之前，本插件的命中信息只应被读作"这个环节没填 / 办结日期对不上 / 状态不在册"，
+#   而**不是**"违反公文处理规定"或"超期未办"。
+#
+# ⚠️⚠️ 另一条**必须保留**的边界：**本插件绝不判定办文是否超期、是否应当督办或问责**。
+#   办理时限取决于公文的紧急程度、来文要求与本机关规定的办文时限，
+#   **国家层面只规定"及时办理"这类原则，具体天数由本机关规定**。
+#   → 因此本插件只核对**台账自身的齐备与自洽**：
+#     环节是否填齐、收文与办结日期是否可解析且先后成立、是否落在台账写明的期限内、
+#     办理状态是否在册、同一份公文是否重复登记。
+#   → 办理状态清单（statuses）出厂为空，未配置即进 skipped，绝不静默通过。
+
+plugin: dsh-gongwen-flow-check
+version: "2026.1"
+
+rules:
+  - id: GF-001
+    title: 每个办理环节都应填写承办人
+    severity: warn
+    basis:
+      document: 《党政机关公文处理工作条例》
+      number: 中办发〔2012〕14号（自 2012 年 7 月 1 日起施行）
+      clause: 第二十三条（公文办理包括收文办理、发文办理和整理归档）、第二十四条（四）承办
+      excerpt: 公文办理包括收文办理、发文办理和整理归档。……承办。阅知性公文应当根据公文内容、要求和工作需要确定范围后分送。批办性公文应当提出拟办意见报本机关负责人批示或者转有关部门办理；需要两个以上部门办理的，应当明确主办部门。紧急公文应当明确办理时限。承办部门对交办的公文应当及时办理，有明确办理时限要求的应当在规定时限内办理完毕。
+      kind: derived-from-principle
+      source: https://www.gov.cn/zwgk/2013-02/22/content_2337704.htm
+    params:
+      check:
+        kind: presence
+        field: handler
+        fix: 补填承办人；本条只核对是否填写，不判断办理是否及时
+    note: >-
+      ✅ **本条 excerpt 已于 2026-10-07 换为逐字引文**（见 rules/evidence/clause-verification-gongwen-articles.md）。
+      ⚠️ kind 仍为 derived-from-principle：第二十四条（四）要求的是"明确主办部门""及时办理"，**并未要求台账记录承办人姓名**——承办人一栏的必要性来自本插件的可追溯性要求。
+      环节台账若没有承办人，"谁在什么时间办到哪一步"就无法追溯，督办与查询都失去落点。
+      本次未取得明文条号，故封顶 warn。
+      本条只核对承办人栏是否填写，**不判断办理是否及时、是否应当督办**。
+
+  - id: GF-002
+    title: 收文日期与办结日期应可解析且先后成立
+    severity: warn
+    basis:
+      document: 《党政机关公文处理工作条例》
+      number: 中办发〔2012〕14号（自 2012 年 7 月 1 日起施行）
+      clause: 第二十四条（二）登记
+      excerpt: 公文办理包括收文办理、发文办理和整理归档。……登记。对公文的主要信息和办理情况应当详细记载。
+      kind: derived-from-principle
+      source: https://www.gov.cn/zwgk/2013-02/22/content_2337704.htm
+    params:
+      check:
+        kind: date
+        field: receivedAt
+        notAfterField: doneAt
+        fix: 办结日期不应早于收文日期；核对两个日期的填写
+    note: >-
+      ✅ **本条 excerpt 已于 2026-10-07 换为逐字引文**（见 rules/evidence/clause-verification-gongwen-articles.md）。
+      ⚠️ kind 仍为 derived-from-principle：第二十四条（二）要求"对公文的主要信息和办理情况应当详细记载"，**并未规定收文与办结日期的先后关系**。
+      "先收文、后办结"是办理流程的**时间前提**；日期可解析是台账能被程序处理的前提。
+      本次未取得明文条号，故封顶 warn。
+      本条只比较两个日期（同一天视为不晚于），**不判断办理是否在时限内**。
+      日期无法解析时会单独报出，**不会静默跳过**。
+
+  - id: GF-003
+    title: 办结日期应落在台账写明的办理期限内
+    severity: info
+    basis:
+      document: 《党政机关公文处理工作条例》
+      number: 中办发〔2012〕14号（自 2012 年 7 月 1 日起施行）
+      clause: 第二十四条（四）承办（紧急公文应当明确办理时限）
+      excerpt: 承办。阅知性公文应当根据公文内容、要求和工作需要确定范围后分送。批办性公文应当提出拟办意见报本机关负责人批示或者转有关部门办理；需要两个以上部门办理的，应当明确主办部门。紧急公文应当明确办理时限。承办部门对交办的公文应当及时办理，有明确办理时限要求的应当在规定时限内办理完毕。
+      kind: institutional-configuration
+      source: https://www.gov.cn/zwgk/2013-02/22/content_2337704.htm
+    params:
+      check:
+        kind: date
+        field: doneAt
+        notBeforeField: receivedAt
+        notAfterField: dueAt
+    note: >-
+      ✅ **本条 excerpt 已于 2026-10-07 换为逐字引文**（见 rules/evidence/clause-verification-gongwen-articles.md）。
+      ⚠️ kind 仍为 institutional-configuration：第二十四条（四）逐字规定「**紧急公文应当明确办理时限**」——**但"本机构台账里写的期限是多少"以及是否用它核对，属本机构口径**，故 `values`／期限出厂为空即进 skipped。
+      本条只在台账**已经写明办理期限**（dueAt）时核对办结日期是否落在其中。
+      依据说明（据《党政机关公文处理工作条例》第二十四条（四）核对）：
+      条例原文为「**紧急公文应当明确办理时限**」「有明确办理时限要求的应当在规定时限内办理完毕」——
+      即**条例把时限的确定交给来文要求与本机关制度，本身不规定天数**。
+      因此本插件**不硬编码任何天数**，也**不替使用方推算办理期限**——
+      期限应由来文要求或本机关办文制度确定，并写入台账的 dueAt 栏。
+      dueAt 为空时本条进 skipped，**不会假定任何期限**。
+      本条命中只表示"与你写在台账里的期限不一致"，**不表示已构成超期未办**——
+      超期与否需结合催办（第二十四条（六））、延期等实际情形判断。
+
+  - id: GF-004
+    title: 办理状态应使用本机构口径的取值
+    severity: info
+    basis:
+      document: 《党政机关公文处理工作条例》
+      number: 中办发〔2012〕14号（自 2012 年 7 月 1 日起施行）
+      clause: 第二十三条
+      excerpt: 公文办理包括收文办理、发文办理和整理归档。
+      kind: institutional-configuration
+      source: https://www.gov.cn/zwgk/2013-02/22/content_2337704.htm
+    params:
+      check:
+        kind: enum
+        field: status
+        values: []
+    note: >-
+      ✅ **本条 excerpt 已于 2026-10-07 换为逐字引文**（见 rules/evidence/clause-verification-gongwen-articles.md）。
+      ⚠️ kind 仍为 institutional-configuration：第二十三条只界定公文办理包括哪三类，**办理状态的取值属本机构口径**。
+      values 出厂为空，表示**未配置**，本条进 skipped。
+      依据说明：环节状态的口径（例如「待办」「承办中」「已办结」「已归档」，
+      或「拟办」「批办」「承办」「催办」「答复」）随**本机关办文制度**变化，
+      本插件**不硬编码任何取值清单**。本条只核对所填值是否在册，
+      **不判断该公文当前实际处于哪个环节**。
+
+  - id: GF-005
+    title: 公文文号不应在台账内重复登记
+    severity: warn
+    basis:
+      document: 《党政机关公文处理工作条例》
+      number: 中办发〔2012〕14号（自 2012 年 7 月 1 日起施行）
+      clause: 第二十四条（二）登记
+      excerpt: 公文办理包括收文办理、发文办理和整理归档。……登记。对公文的主要信息和办理情况应当详细记载。
+      kind: derived-from-principle
+      source: https://www.gov.cn/zwgk/2013-02/22/content_2337704.htm
+    params:
+      check:
+        kind: unique
+        field: docNo
+    note: >-
+      ✅ **本条 excerpt 已于 2026-10-07 换为逐字引文**（见 rules/evidence/clause-verification-gongwen-articles.md）。
+      ⚠️ kind 仍为 derived-from-principle：第二十四条（二）要求登记主要信息，**未规定文号不得重复**。
+      文号唯一是"同一份公文只被登记一次"的**前提条件**：文号重复会让人无法判断
+      到底是重复登记，还是两份不同公文被错编成同一号。本次未取得明文条号，故封顶 warn。
+      比较时忽略空白字符。命中通常意味着重复登记或文号抄错，需人工确认。
+
+  - id: GF-006
+    title: 台账应声明公文标题与收文日期
+    severity: warn
+    basis:
+      document: 《党政机关公文处理工作条例》
+      number: 中办发〔2012〕14号（自 2012 年 7 月 1 日起施行）
+      clause: 第二十四条（二）登记
+      excerpt: 公文办理包括收文办理、发文办理和整理归档。……登记。对公文的主要信息和办理情况应当详细记载。
+      kind: derived-from-principle
+      source: https://www.gov.cn/zwgk/2013-02/22/content_2337704.htm
+    params:
+      check:
+        kind: headerPresence
+        fields: [title, receivedAt]
+    note: >-
+      ✅ **本条 excerpt 已于 2026-10-07 换为逐字引文**（见 rules/evidence/clause-verification-gongwen-articles.md）。
+      ⚠️ kind 仍为 derived-from-principle：第二十四条（二）**未要求台账声明公文标题与收文日期**——那是"办理情况与该公文对应"的前提。
+      台账若不写明公文标题与收文日期，办理情况无法与该公文对应，也无法判断何时开始计时。
+      本次未取得明文条号，故封顶 warn。
+      配置项 title 对应材料顶层的公文标题，receivedAt 对应收文（登记）日期。
+
+disabled: []

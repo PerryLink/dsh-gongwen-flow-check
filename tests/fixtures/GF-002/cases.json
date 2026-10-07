@@ -1,0 +1,21 @@
+{
+  "ruleId": "GF-002",
+  "pairs": [
+    {
+      "name": "expected-state",
+      "material": "GF-002-compliant.json",
+      "expect": {
+        "ruleId": "GF-002",
+        "count": 0
+      }
+    },
+    {
+      "name": "difference-present",
+      "material": "GF-002-unsafe.json",
+      "expect": {
+        "ruleId": "GF-002",
+        "count": 1
+      }
+    }
+  ]
+}

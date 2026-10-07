@@ -1,0 +1,31 @@
+{
+  "ruleId": "GF-004",
+  "configure": {
+    "GF-004": {
+      "values": [
+        "待办",
+        "承办中",
+        "已办结",
+        "已归档"
+      ]
+    }
+  },
+  "pairs": [
+    {
+      "name": "expected-state",
+      "material": "GF-004-compliant.json",
+      "expect": {
+        "ruleId": "GF-004",
+        "count": 0
+      }
+    },
+    {
+      "name": "difference-present",
+      "material": "GF-004-unsafe.json",
+      "expect": {
+        "ruleId": "GF-004",
+        "count": 1
+      }
+    }
+  ]
+}

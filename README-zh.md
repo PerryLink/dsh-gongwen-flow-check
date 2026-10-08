@@ -48,8 +48,7 @@ document or your own rules, and this plugin never invents one.
 ## Install
 
 ```sh
-pnpm pack
-dsh plugin --profile <name> add ./*.tgz
+dsh plugin --profile <name> add dsh-gongwen-flow-check
 dsh --profile <name> --dump-config | grep 'dsh-gongwen-flow-check'
 ```
 

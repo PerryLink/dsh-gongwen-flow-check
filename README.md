@@ -1,4 +1,23 @@
-# dsh-gongwen-flow-check
+# dsh-gongwen-flow-check — Official document circulation and handling deadline register check
+
+`dsh-gongwen-flow-check` reads one incoming-document register with its handling-step ledger — the document header plus one row per handling step — and checks that register’s own completeness and internal consistency: that every step names a handler in `handler`, that `receivedAt` and `doneAt` parse as dates and follow each other, that a completion falls inside the deadline the register itself records in `dueAt`, that each `status` comes from the vocabulary you configured, that `docNo` is registered only once, and that the header declares the document title and receipt date. It does not decide whether handling was late, whether it should be chased, or who is accountable.
+
+## What it answers
+
+| You ask | What it answers |
+|---|---|
+| A handling step has no handler filled in. What does the register get told? | `GF-001` requires the `handler` column on every step and reports the step where it is blank. It checks only that the column is filled in, not whether the handling was timely — it does not decide whether the step should have been chased or who is accountable. |
+| The completion date is earlier than the receipt date. Is that caught? | Yes. `GF-002` parses `receivedAt` against `doneAt` and reports the step when the two dates do not follow each other. It compares the two dates written in the ledger only — the same day counts as not later — and does not judge whether the handling stayed inside its deadline. A date it cannot parse is reported separately rather than skipped in silence. |
+| A row never records a handling deadline. Does the check assume one? | No. `GF-003` runs only when the register itself writes a deadline into `dueAt`; with `dueAt` empty the rule reports itself in `skipped`. The regulation fixes no number of days and the plugin hard-codes none, so no deadline is ever inferred. A hit means “this does not match the deadline you recorded”, not “this is overdue”. |
+| The handling status is filled with a value that is not in the configured list. | `GF-004` reports the row when the `status` value is not among the values you configured in `values`. Shipped, that list is empty, which means unconfigured, so the rule reports itself in `skipped` instead of passing in silence. It checks only whether the value is on your list, not which stage the document is actually at. |
+| The same document number appears twice in the register. | `GF-005` requires `docNo` to be unique in the register; whitespace is ignored when comparing. A hit usually means a duplicate registration or a mis-copied number, and needs a human to confirm: a repeated `docNo` leaves the reader unable to tell one document registered twice from two different documents carrying one number. |
+| The register itself never declares the document title and receipt date. | `GF-006` requires the header to declare both `title` and `receivedAt` at the top level, and reports the header when either is missing. It checks only that the two are declared, not whether the title is in the correct form, and not whether the handling records really belong to that document. |
+
+## Standards it follows
+
+| Document | Number | Cited by rules |
+|---|---|---|
+| 《党政机关公文处理工作条例》 | 中办发〔2012〕14号（自 2012 年 7 月 1 日起施行） | GF-001, GF-002, GF-003, GF-004, GF-005, GF-006 |
 
 **Boundary:** this plugin checks a **收文登记与办理环节台账** for what a register can be held to
 mechanically — that every step names its handler, that the receipt and completion dates parse and follow

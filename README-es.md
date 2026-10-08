@@ -1,4 +1,23 @@
-# dsh-gongwen-flow-check
+# dsh-gongwen-flow-check — Verificación del circuito de documentos oficiales y de los plazos de tramitación
+
+`dsh-gongwen-flow-check` lee un registro de entrada de documentos oficiales con su libro de fases de tramitación —la cabecera del documento más una fila por fase— y comprueba la completitud y la coherencia interna de ese registro: que cada fase indique su responsable en `handler`, que `receivedAt` y `doneAt` se analicen como fechas y sean sucesivas, que el cierre caiga dentro del plazo que el propio registro anota en `dueAt`, que cada `status` proceda de la lista que usted configuró, que `docNo` se registre una sola vez y que la cabecera declare el título del documento y la fecha de recepción. No decide si la tramitación llegó tarde, si debía reclamarse ni quién es responsable.
+
+## Qué responde
+
+| Usted pregunta | Qué responde |
+|---|---|
+| Una fase de tramitación no tiene responsable. ¿Qué se le informa al registro? | `GF-001` exige la columna `handler` en cada fase y señala la fila en la que está vacía. Comprueba únicamente que la columna esté rellenada, no si la tramitación fue oportuna: no decide si esa fase debía reclamarse ni quién es responsable. |
+| La fecha de cierre es anterior a la de recepción. ¿Se detecta? | Sí. `GF-002` analiza `receivedAt` frente a `doneAt` y señala la fila cuando las dos fechas no son sucesivas. Solo compara las dos fechas escritas en el libro —el mismo día cuenta como no posterior— y no juzga si la tramitación se mantuvo dentro de su plazo. Una fecha que no puede analizar se informa por separado en lugar de omitirse en silencio. |
+| Una fila nunca registra un plazo de tramitación. ¿El chequeo supone alguno? | No. `GF-003` solo se ejecuta cuando el propio registro escribe un plazo en `dueAt`; con `dueAt` vacío la regla se informa a sí misma en `skipped`. El reglamento no fija ningún número de días y el plugin no codifica ninguno, así que nunca se deduce un plazo. Un aviso significa «esto no coincide con el plazo que usted anotó», no «esto está fuera de plazo». |
+| El estado de tramitación trae un valor que no está en la lista configurada. | `GF-004` señala la fila cuando el valor de `status` no figura entre los que usted configuró en `values`. De fábrica esa lista está vacía, lo que significa sin configurar, así que la regla se informa a sí misma en `skipped` en lugar de pasar en silencio. Solo comprueba si el valor está en su lista, no en qué fase se encuentra realmente el documento. |
+| El mismo número de documento aparece dos veces en el registro. | `GF-005` exige que `docNo` sea único en el registro; al comparar se ignoran los espacios en blanco. Un aviso suele significar un registro duplicado o un número mal copiado, y requiere confirmación humana: repetir el `docNo` impide saber si es un documento registrado dos veces o dos documentos distintos con un solo número. |
+| El propio registro no declara el título del documento ni la fecha de recepción. | `GF-006` exige que la cabecera declare `title` y `receivedAt` en el nivel superior y señala la cabecera cuando falta alguno. Comprueba solo que ambos estén declarados, no si el título tiene la forma correcta ni si las anotaciones de tramitación corresponden de verdad a ese documento. |
+
+## Normas que sigue
+
+| Documento | Número | Reglas que lo citan |
+|---|---|---|
+| 《党政机关公文处理工作条例》 | 中办发〔2012〕14号（自 2012 年 7 月 1 日起施行） | GF-001, GF-002, GF-003, GF-004, GF-005, GF-006 |
 
 **Boundary:** this plugin checks a **收文登记与办理环节台账** for what a register can be held to
 mechanically — that every step names its handler, that the receipt and completion dates parse and follow

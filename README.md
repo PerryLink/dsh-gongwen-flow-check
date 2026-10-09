@@ -1,6 +1,14 @@
 # dsh-gongwen-flow-check — Official document circulation and handling deadline register check
 
+[![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+
 `dsh-gongwen-flow-check` reads one incoming-document register with its handling-step ledger — the document header plus one row per handling step — and checks that register’s own completeness and internal consistency: that every step names a handler in `handler`, that `receivedAt` and `doneAt` parse as dates and follow each other, that a completion falls inside the deadline the register itself records in `dueAt`, that each `status` comes from the vocabulary you configured, that `docNo` is registered only once, and that the header declares the document title and receipt date. It does not decide whether handling was late, whether it should be chased, or who is accountable.
+
+## What it looks like
+
+![Terminal demo of dsh-gongwen-flow-check: real output over its GF-002 fixture](https://raw.githubusercontent.com/PerryLink/dsh-gongwen-flow-check/main/docs/assets/dsh-gongwen-flow-check-demo.png)
+
+Real output from this plugin over its own `GF-002` test fixture — not a mock-up. The rule pack ships no invented quotations, so a finding names both the clause it applied and the fact that the clause text was not obtained.
 
 ## What it answers
 

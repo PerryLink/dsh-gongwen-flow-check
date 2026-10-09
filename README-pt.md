@@ -1,6 +1,14 @@
 # dsh-gongwen-flow-check — Verificação do circuito de documentos oficiais e dos prazos de tramitação
 
+[![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+
 `dsh-gongwen-flow-check` lê um registo de entrada de documentos oficiais com o seu livro de fases de tramitação —o cabeçalho do documento mais uma linha por fase— e verifica a completude e a coerência interna desse registo: se cada fase indica o seu responsável em `handler`, se `receivedAt` e `doneAt` são analisáveis como datas e são sucessivas, se o encerramento cai dentro do prazo que o próprio registo anota em `dueAt`, se cada `status` vem da lista que configurou, se `docNo` é registado uma só vez e se o cabeçalho declara o título do documento e a data de receção. Não decide se a tramitação foi tardia, se devia ser reclamada nem quem é responsável.
+
+## Como é a saída
+
+![Terminal demo of dsh-gongwen-flow-check: real output over its GF-002 fixture](https://raw.githubusercontent.com/PerryLink/dsh-gongwen-flow-check/main/docs/assets/dsh-gongwen-flow-check-demo.png)
+
+Saída real deste plugin sobre o seu próprio fixture de teste `GF-002` — não é uma simulação. O pacote de regras não inventa citações, por isso cada achado nomeia a cláusula aplicada e avisa que o seu texto não foi obtido.
 
 ## O que ele responde
 

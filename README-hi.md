@@ -4,6 +4,13 @@
 
 `dsh-gongwen-flow-check` एक प्राप्ति-रजिस्टर और उसके निपटान-चरण बही को पढ़ता है — पत्र का हेडर और प्रत्येक निपटान चरण की एक पंक्ति — और उसी रजिस्टर की पूर्णता तथा आंतरिक संगति जाँचता है: क्या प्रत्येक चरण में `handler` के अंतर्गत निपटान-कर्ता दर्ज है, क्या `receivedAt` और `doneAt` तिथियों के रूप में पढ़े जा सकते हैं और क्रम में हैं, क्या निपटान `dueAt` में रजिस्टर द्वारा ही लिखी समय-सीमा के भीतर है, क्या प्रत्येक `status` आपकी कॉन्फ़िगर की गई सूची से लिया गया है, क्या `docNo` केवल एक बार दर्ज है, और क्या हेडर पत्र का शीर्षक तथा प्राप्ति-तिथि घोषित करता है। यह नहीं तय करता कि निपटान विलंब से हुआ, उसे याद दिलाया जाना चाहिए था, या इसका उत्तरदायी कौन है।
 
+## Install
+
+```sh
+dsh plugin --profile <name> add dsh-gongwen-flow-check
+dsh --profile <name> --dump-config | grep 'dsh-gongwen-flow-check'
+```
+
 ## आउटपुट कैसा दिखता है
 
 ![Terminal demo of dsh-gongwen-flow-check: real output over its GF-002 fixture](https://raw.githubusercontent.com/PerryLink/dsh-gongwen-flow-check/main/docs/assets/dsh-gongwen-flow-check-hero.png)
@@ -73,13 +80,6 @@ document or your own rules, and this plugin never invents one.
 ## What it does
 
 नियम-सूची, फ़ील्ड और विस्तृत व्यवहार [README.md](README.md#what-it-does) (अंग्रेज़ी मुख्य संस्करण) में हैं। यह प्लगइन केवल उद्धृत धाराओं के सामने शाब्दिक अंतर सूचीबद्ध करता है और हर न चल पाई जाँच को `skipped` में बताता है।
-
-## Install
-
-```sh
-dsh plugin --profile <name> add dsh-gongwen-flow-check
-dsh --profile <name> --dump-config | grep 'dsh-gongwen-flow-check'
-```
 
 ## Configuration
 

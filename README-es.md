@@ -4,6 +4,13 @@
 
 `dsh-gongwen-flow-check` lee un registro de entrada de documentos oficiales con su libro de fases de tramitación —la cabecera del documento más una fila por fase— y comprueba la completitud y la coherencia interna de ese registro: que cada fase indique su responsable en `handler`, que `receivedAt` y `doneAt` se analicen como fechas y sean sucesivas, que el cierre caiga dentro del plazo que el propio registro anota en `dueAt`, que cada `status` proceda de la lista que usted configuró, que `docNo` se registre una sola vez y que la cabecera declare el título del documento y la fecha de recepción. No decide si la tramitación llegó tarde, si debía reclamarse ni quién es responsable.
 
+## Install
+
+```sh
+dsh plugin --profile <name> add dsh-gongwen-flow-check
+dsh --profile <name> --dump-config | grep 'dsh-gongwen-flow-check'
+```
+
 ## Cómo se ve la salida
 
 ![Terminal demo of dsh-gongwen-flow-check: real output over its GF-002 fixture](https://raw.githubusercontent.com/PerryLink/dsh-gongwen-flow-check/main/docs/assets/dsh-gongwen-flow-check-hero.png)
@@ -73,13 +80,6 @@ document or your own rules, and this plugin never invents one.
 ## What it does
 
 La tabla de reglas, los campos y el comportamiento detallado están en [README.md](README.md#what-it-does) (versión principal en inglés). El plugin sólo enumera divergencias literales frente a las cláusulas citadas e indica en `skipped` cada comprobación que no pudo ejecutarse.
-
-## Install
-
-```sh
-dsh plugin --profile <name> add dsh-gongwen-flow-check
-dsh --profile <name> --dump-config | grep 'dsh-gongwen-flow-check'
-```
 
 ## Configuration
 

@@ -4,6 +4,13 @@
 
 `dsh-gongwen-flow-check` 读取一份收文登记与办理环节台账——公文表头加每个办理环节一行——核对这份台账自身的齐备与自洽：每个环节是否在 `handler` 栏填写承办人、`receivedAt` 与 `doneAt` 是否可解析为日期且先后成立、办结是否落在台账自己写入 `dueAt` 的办理期限之内、每个 `status` 是否取自你配置的取值清单、`docNo` 是否只登记一次、表头是否声明公文标题与收文日期。它不判定办文是否超期、是否应当督办，也不判定由谁负责。
 
+## Install
+
+```sh
+dsh plugin --profile <name> add dsh-gongwen-flow-check
+dsh --profile <name> --dump-config | grep 'dsh-gongwen-flow-check'
+```
+
 ## 实际输出长什么样
 
 ![Terminal demo of dsh-gongwen-flow-check: real output over its GF-002 fixture](https://raw.githubusercontent.com/PerryLink/dsh-gongwen-flow-check/main/docs/assets/dsh-gongwen-flow-check-hero.png)
@@ -73,13 +80,6 @@ document or your own rules, and this plugin never invents one.
 ## What it does
 
 规则表、字段说明与行为细节见 [README.md](README.md#what-it-does)（英文主版本）。本插件只列出材料与所引条款之间的字面差异，并对无法执行的检查在 `skipped` 中逐项说明。
-
-## Install
-
-```sh
-dsh plugin --profile <name> add dsh-gongwen-flow-check
-dsh --profile <name> --dump-config | grep 'dsh-gongwen-flow-check'
-```
 
 ## Configuration
 

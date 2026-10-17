@@ -1,0 +1,14 @@
+[
+  {
+    "path": "docs/assets/dsh-gongwen-flow-check-hero.png",
+    "kind": "hero",
+    "alt": "dsh-gongwen-flow-check terminal output",
+    "caption": "Real dsh-gongwen-flow-check checker output; 31 tests passed."
+  },
+  {
+    "path": "docs/assets/dsh-gongwen-flow-check-demo.gif",
+    "kind": "demo",
+    "alt": "Animated dsh-gongwen-flow-check terminal session",
+    "caption": "The same run, assembled line by line."
+  }
+]

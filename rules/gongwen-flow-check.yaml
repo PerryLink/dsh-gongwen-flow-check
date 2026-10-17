@@ -9,15 +9,13 @@
 #   - kind: derived-from-principle       条款未直接规定，仅能由原则性条款推论（severity 最多 warn）
 #   - kind: institutional-configuration 阈值出自本机构配置（severity 最多 info）
 #
-# ⚠️⚠️ 本规则库的诚实说明：**excerpt 一律不是引文。**
+# ⚠️ 本规则库的诚实说明：**excerpt 是逐字摘录；未取得条文时不写 excerpt，不伪造引文。**
 #   本插件核对的是"收文登记与办理环节台账"是否齐备、时限是否自洽。
 #   其规范载体包括《党政机关公文处理工作条例》（中办发〔2012〕14号）
-#   与《党政机关公文格式》（GB/T 9704-2012）。**核查未取得这些文件的逐字条文**，
-#   因此本规则库**不伪造任何"原文"**：每条规则的 excerpt 都写明"该条文本次未取得"，
-#   依据状态放在 note 里如实说明；kind 一律降为 derived-from-principle（封顶 warn）
-#   或 institutional-configuration（封顶 info）。
-#   **取得条文后必须做两件事**：把 excerpt 换成真正的逐字摘录，把 kind 升为 direct。
-#   在那之前，本插件的命中信息只应被读作"这个环节没填 / 办结日期对不上 / 状态不在册"，
+#   与《党政机关公文格式》（GB/T 9704-2012）；已取得的逐字条文标 kind: direct，
+#   仅原则性条款或本机构配置的规则保留 derived-from-principle / institutional-configuration
+#   并分别封顶 warn / info。引文覆盖率由 `check:citations` 逐段核对。
+#   命中信息只应被读作"这个环节没填 / 办结日期对不上 / 状态不在册"，
 #   而**不是**"违反公文处理规定"或"超期未办"。
 #
 # ⚠️⚠️ 另一条**必须保留**的边界：**本插件绝不判定办文是否超期、是否应当督办或问责**。

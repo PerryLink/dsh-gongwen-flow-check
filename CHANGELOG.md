@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.7] - 2026-10-18
+
+### Fixed
+
+- **The rule-pack header no longer claims every `excerpt` is a non-quotation.** All six excerpts are verbatim and `check:citations` reports 10 checked segments; the header now states the actual rule (quote verbatim, or omit the excerpt) and the real `kind` discipline.
+
 ## [0.2.6] - 2026-10-18
 
 ### Changed

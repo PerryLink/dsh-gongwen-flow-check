@@ -40,28 +40,15 @@ dsh --profile <name> --dump-config | grep 'dsh-gongwen-flow-check'
 
 **边界（中文译文，以英文原文为准）：** 本插件核对一份**收文登记与办理环节台账**，范围限于登记表可以机械判定的事项——每个环节是否写明承办人，收文日期与办结日期是否可解析且先后成立，办结是否落在台账自己写明的期限之内，办理状态是否取自你配置的取值口径，文号是否唯一，以及表头是否标明该公文。它**不**判定办理是否逾期、是否应当督办，也不判定由谁负责。条例要求紧急公文**明确办理时限**，并要求在规定时限内办结——**条例本身不规定任何天数**，因此期限始终来自来文或本机构自己的规定，本插件从不自行拟定任何期限。
 
-> ### ⚠️ What the citations in this plugin's report actually rest on
+> ### ⚠️ 本插件报告中的引文究竟以什么为依据（以英文原文为准）
 >
-> **The regulation's full text has been obtained and checked.** 《党政机关公文处理工作条例》(中办发〔2012〕14号)
-> was read verbatim from the central government portal, and `rules/evidence/clause-verification.md` records
-> exactly which articles were quoted — article 5 (principles), article 24 (the seven receiving procedures,
-> including 「紧急公文应当明确办理时限」) and article 42 (in force from 2012-07-01, superseding two earlier
-> documents). That check **corrected this pack's own wording**: it previously said national rules contain only a
-> general principle, when article 24 in fact requires an urgent document's deadline to be *stated*.
+> **该条例的全文已经取得并核对。** 《党政机关公文处理工作条例》（中办发〔2012〕14号）已从中央政府门户网站逐字读取，`rules/evidence/clause-verification.md` 准确记录了所引的条款——第五条（原则）、第二十四条（七项收文办理程序，包括「紧急公文应当明确办理时限」）和第四十二条（自 2012-07-01 起施行，取代此前两份文件）。那次核对**纠正了本规则库自己的措辞**：它此前称国家层面的规则只含一条一般原则，而第二十四条实际上要求紧急公文的办理时限必须被*明确写出*。
 >
-> **The rule `excerpt` fields still say "本次未取得", and every rule remains `warn` or `info`** — deliberately.
-> What this plugin checks is whether *a register* is complete and self-consistent; the regulation governs how a
-> document is *handled*, which is a different proposition. Labelling "this column is blank" as a `direct`
-> citation of "handling shall be recorded in detail" would dress a register gap up as a breach of the regulation,
-> which is exactly the over-claim this family exists to avoid. The check also leaves the deadline's size to the
-> incoming document and the institution, as article 24 does.
+> **各规则的 `excerpt` 字段仍写着“本次未取得”，每条规则也仍然是 `warn` 或 `info`**——这是有意为之。本插件核对的是*一份台账*是否齐全且自洽；条例规范的是公文如何被*办理*，这是另一个命题。把“这一栏是空的”标成对“办理应当详细记录”的 `direct` 引用，会把台账的缺口粉饰成违反条例，而这正是本系列插件要避免的过度主张。这项检查也把期限的长短留给来文与所在机构决定，正如第二十四条所做的那样。
 >
-> 《党政机关公文格式》(GB/T 9704-2012) **was not obtained**, and this plugin does not check layout in any case.
+> 《党政机关公文格式》（GB/T 9704-2012）**本次未取得**，况且本插件在任何情况下都不核对版式。
 >
-> The deadline rule deserves its own note. `GF-003` compares the completion date against the deadline
-> **written in the register itself** (`dueAt`); with no deadline recorded it reports itself in `skipped`
-> rather than assuming a number of days. Its finding says "this does not match the deadline you recorded",
-> **not** "this is overdue" — lateness depends on reminders, extensions and the document's own urgency.
+> 期限规则值得单独说明。`GF-003` 把办结日期与**台账自身写明的**期限（`dueAt`）相比较；未记录期限时，它报告自己进了 `skipped`，而不是假定一个天数。它的发现说的是“这与所记录的期限不符”，**而不是**“这已逾期”——是否逾期取决于催办、延期以及公文自身的紧急程度。
 
 ## Compatibility
 

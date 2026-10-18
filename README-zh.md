@@ -38,14 +38,7 @@ dsh --profile <name> --dump-config | grep 'dsh-gongwen-flow-check'
 |---|---|---|
 | 《党政机关公文处理工作条例》 | 中办发〔2012〕14号（自 2012 年 7 月 1 日起施行） | GF-001, GF-002, GF-003, GF-004, GF-005, GF-006 |
 
-**Boundary:** this plugin checks a **收文登记与办理环节台账** for what a register can be held to
-mechanically — that every step names its handler, that the receipt and completion dates parse and follow
-each other, that a completion falls inside the deadline the register itself states, that statuses come from
-your vocabulary, that document numbers are unique, and that the header identifies the document. It does
-**not** decide whether handling was late, whether it should be chased, or who is accountable. The regulation
-requires an urgent document to have **its handling deadline stated** and requires work to finish within a
-stated deadline — **it fixes no number of days itself**, so the deadline always comes from the incoming
-document or your own rules, and this plugin never invents one.
+**边界（中文译文，以英文原文为准）：** 本插件核对一份**收文登记与办理环节台账**，范围限于登记表可以机械判定的事项——每个环节是否写明承办人，收文日期与办结日期是否可解析且先后成立，办结是否落在台账自己写明的期限之内，办理状态是否取自你配置的取值口径，文号是否唯一，以及表头是否标明该公文。它**不**判定办理是否逾期、是否应当督办，也不判定由谁负责。条例要求紧急公文**明确办理时限**，并要求在规定时限内办结——**条例本身不规定任何天数**，因此期限始终来自来文或本机构自己的规定，本插件从不自行拟定任何期限。
 
 > ### ⚠️ What the citations in this plugin's report actually rest on
 >

@@ -1,5 +1,7 @@
 # dsh-gongwen-flow-check — Verificación del circuito de documentos oficiales y de los plazos de tramitación
 
+[English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
+
 [![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
 
 `dsh-gongwen-flow-check` lee un registro de entrada de documentos oficiales con su libro de fases de tramitación —la cabecera del documento más una fila por fase— y comprueba la completitud y la coherencia interna de ese registro: que cada fase indique su responsable en `handler`, que `receivedAt` y `doneAt` se analicen como fechas y sean sucesivas, que el cierre caiga dentro del plazo que el propio registro anota en `dueAt`, que cada `status` proceda de la lista que usted configuró, que `docNo` se registre una sola vez y que la cabecera declare el título del documento y la fecha de recepción. No decide si la tramitación llegó tarde, si debía reclamarse ni quién es responsable.

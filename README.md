@@ -1,5 +1,7 @@
 # dsh-gongwen-flow-check — Official document circulation and handling deadline register check
 
+[English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
+
 [![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
 
 `dsh-gongwen-flow-check` reads one incoming-document register with its handling-step ledger — the document header plus one row per handling step — and checks that register’s own completeness and internal consistency: that every step names a handler in `handler`, that `receivedAt` and `doneAt` parse as dates and follow each other, that a completion falls inside the deadline the register itself records in `dueAt`, that each `status` comes from the vocabulary you configured, that `docNo` is registered only once, and that the header declares the document title and receipt date. It does not decide whether handling was late, whether it should be chased, or who is accountable.

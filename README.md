@@ -28,6 +28,35 @@ dsh --profile <name> --dump-config | grep 'dsh-gongwen-flow-check'
 
 The table below is the example set: the first row is the detailed walkthrough, the remaining rows are short cases.
 
+#### Detailed output
+
+**Tool** `gongwen_flow_check`
+
+**Input**
+
+~~~json
+{"rows":[{"办理环节":"承办","收文日期":"2026-03-02","办结日期":"2026-02-28"}]}
+~~~
+ 
+**Output**
+
+~~~json
+{
+  "id": "dsh-gongwen-flow-check.GF-002.de09b5a6",
+  "ruleId": "GF-002",
+  "severity": "warn",
+  "locator": {
+    "field": "receivedAt",
+    "row": 1
+  },
+  "found": "第 1 行「receivedAt」为 2026-03-02，晚于 「doneAt」的 2026-02-28",
+  "expected": "「receivedAt」不应晚于 2026-02-28",
+  "fix": "办结日期不应早于收文日期；核对两个日期的填写"
+}
+~~~
+
+*Observed from `tests/fixtures/GF-002/GF-002-unsafe.json (cases.json expects GF-002 count 1); run via lib/index.mjs rules/gongwen-flow-check.yaml`*
+
 | You ask | What it answers |
 |---|---|
 | A handling step has no handler filled in. What does the register get told? | `GF-001` requires the `handler` column on every step and reports the step where it is blank. It checks only that the column is filled in, not whether the handling was timely — it does not decide whether the step should have been chased or who is accountable. |

@@ -30,6 +30,35 @@ Salida real de este plugin sobre su propio fixture de prueba `GF-002` — no es 
 La tabla siguiente es el conjunto de ejemplos: la primera fila es el caso detallado y las demás son casos breves.
 
 
+#### Salida detallada
+
+**Herramienta** `gongwen_flow_check`
+
+**Entrada**
+
+~~~json
+{"rows":[{"办理环节":"承办","收文日期":"2026-03-02","办结日期":"2026-02-28"}]}
+~~~
+ 
+**Salida**
+
+~~~json
+{
+  "id": "dsh-gongwen-flow-check.GF-002.de09b5a6",
+  "ruleId": "GF-002",
+  "severity": "warn",
+  "locator": {
+    "field": "receivedAt",
+    "row": 1
+  },
+  "found": "第 1 行「receivedAt」为 2026-03-02，晚于 「doneAt」的 2026-02-28",
+  "expected": "「receivedAt」不应晚于 2026-02-28",
+  "fix": "办结日期不应早于收文日期；核对两个日期的填写"
+}
+~~~
+
+*Observado en `tests/fixtures/GF-002/GF-002-unsafe.json (cases.json expects GF-002 count 1); run via lib/index.mjs rules/gongwen-flow-check.yaml`*
+
 | Usted pregunta | Qué responde |
 |---|---|
 | Una fase de tramitación no tiene responsable. ¿Qué se le informa al registro? | `GF-001` exige la columna `handler` en cada fase y señala la fila en la que está vacía. Comprueba únicamente que la columna esté rellenada, no si la tramitación fue oportuna: no decide si esa fase debía reclamarse ni quién es responsable. |

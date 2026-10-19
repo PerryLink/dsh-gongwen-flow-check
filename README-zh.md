@@ -30,6 +30,35 @@ dsh --profile <name> --dump-config | grep 'dsh-gongwen-flow-check'
 下表是示例集：第一行是详细走查，其余行是简短案例。
 
 
+#### 详细输出
+
+**工具** `gongwen_flow_check`
+
+**输入**
+
+~~~json
+{"rows":[{"办理环节":"承办","收文日期":"2026-03-02","办结日期":"2026-02-28"}]}
+~~~
+ 
+**输出**
+
+~~~json
+{
+  "id": "dsh-gongwen-flow-check.GF-002.de09b5a6",
+  "ruleId": "GF-002",
+  "severity": "warn",
+  "locator": {
+    "field": "receivedAt",
+    "row": 1
+  },
+  "found": "第 1 行「receivedAt」为 2026-03-02，晚于 「doneAt」的 2026-02-28",
+  "expected": "「receivedAt」不应晚于 2026-02-28",
+  "fix": "办结日期不应早于收文日期；核对两个日期的填写"
+}
+~~~
+
+*来源 `tests/fixtures/GF-002/GF-002-unsafe.json (cases.json expects GF-002 count 1); run via lib/index.mjs rules/gongwen-flow-check.yaml`*
+
 | 你会问 | 它怎么答 |
 |---|---|
 | 某个办理环节的承办人漏填了，台账会收到什么提示？ | `GF-001` 要求每个环节都填写 `handler` 栏，并把空着的那一行报出。它只核对这一栏是否填写，不判断办理是否及时——既不判断这个环节是否应当督办，也不判断由谁负责。 |

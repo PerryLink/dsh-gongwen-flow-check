@@ -3,6 +3,7 @@
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
 [![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+[![dshfind](https://dshfind.com/api/badge/PerryLink/dsh-gongwen-flow-check?metric=downloads)](https://dshfind.com/en/plugins/PerryLink/dsh-gongwen-flow-check?ref=badge)
 
 `dsh-gongwen-flow-check` lê um registo de entrada de documentos oficiais com o seu livro de fases de tramitação —o cabeçalho do documento mais uma linha por fase— e verifica a completude e a coerência interna desse registo: se cada fase indica o seu responsável em `handler`, se `receivedAt` e `doneAt` são analisáveis como datas e são sucessivas, se o encerramento cai dentro do prazo que o próprio registo anota em `dueAt`, se cada `status` vem da lista que configurou, se `docNo` é registado uma só vez e se o cabeçalho declara o título do documento e a data de receção. Não decide se a tramitação foi tardia, se devia ser reclamada nem quem é responsável.
 

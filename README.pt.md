@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-gongwen-flow-check-flow-dark.svg">
-  <img src="docs/assets/dsh-gongwen-flow-check-flow-light.svg" width="100%" alt="Fluxo de dados do dsh-gongwen-flow-check: registo de receção e tramitação (JSON/YAML) → leitor gongwen_flow_check → pacote de regras GF-001…GF-006 → relatório (found/expected/fix + skipped); apenas diferenças, sem veredicto, o original nunca é modificado">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-gongwen-flow-check-hero-en-dark.webp">
+  <img src="docs/assets/dsh-gongwen-flow-check-hero-en-light.webp" width="100%" alt="dsh-gongwen-flow-check, capa: a coluna esquerda leva o nome do plugin, duas linhas de valor e a nota de limites; à direita está um registo de receção e tramitação (número do documento, título, data de receção, tipo e organismo, mais uma linha de tramitação cujo responsável está vazio, com datas de receção, prazo e conclusão, e um estado) e, abaixo, a lista de diferenças que produz: GF-001, um warn, linha 1 sem responsável; GF-004, um skipped, values não configurado; contadores skipped 1, warn 1, error 0, com um selo que diz apenas diferenças, nunca um veredicto">
 </picture>
 
 # dsh-gongwen-flow-check
@@ -37,6 +37,11 @@ dsh plugin --profile <name> add dsh-gongwen-flow-check
 ## O que é
 
 `dsh-gongwen-flow-check` lê um registo de receção e tramitação — o cabeçalho do documento (`docNo`, `title`, `receivedAt`, etc.) mais uma linha por fase de tramitação — e verifica o que um registo pode sustentar mecanicamente: se cada fase preenche a coluna `handler`, se `receivedAt` e `doneAt` são analisáveis como datas e são sucessivas, se a conclusão cai dentro do prazo que o próprio registo anota em `dueAt`, se cada `status` vem do vocabulário que configurar em `values`, se `docNo` é registado uma só vez e se o cabeçalho declara `title` e `receivedAt`. Você entrega o material original (uma tabela, um registo ou um documento; o Excel pode ser convertido antes para JSON/YAML, até no chat se a plataforma permitir) e recebe uma lista de diferenças: que linha, que coluna, o que falta. Não decide se a tramitação chegou tarde, se devia ser cobrada, nem quem é responsável — e jamais modifica o original.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-gongwen-flow-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-gongwen-flow-check-flow-v5-light.svg" width="100%" alt="Estrutura do dsh-gongwen-flow-check: um registo de receção e tramitação (7 campos de cabeçalho e 8 colunas de linha, aliases normalizados, é exigida pelo menos uma coluna de fase, estado ou responsável) alimenta seis regras através de um barramento só de leitura. A barra acima das portas fixa o teto de gravidade: o pacote não tem base direct, pelo que error nunca é emitido; as regras baseadas em princípios ficam limitadas a warn (quatro) e as de configuração institucional a info (duas). Na execução real da amostra, GF-001 dispara (linha 1 sem responsável, warn), GF-004 não pode correr porque values não está configurado e declara-se em skipped, e GF-002, GF-003, GF-005 e GF-006 correram sem achados e não entram em nenhuma lista; as três bandejas convergem num relatório (error 0 / warn 1 / info 0, issueCount 1 / skippedCount 1, markdown + reportJson). O relatório apenas lista diferenças, o veredicto fica com o revisor e o original nunca é modificado">
+</picture>
 
 ## Instalação em três passos
 
@@ -320,7 +325,7 @@ pnpm run check:citations   # confronta cada citação de regra com rules/evidenc
 node ../scripts/sync-shared.mjs dsh-gongwen-flow-check   # atualiza src/shared a partir de ../_shared
 ```
 
-O plugin é **orientado por dados**: `src/model.ts` declara a forma da tabela, o kit partilhado fornece o leitor e o motor de verificação, e o pacote de regras declara cada verificação. Edite `rules/*.yaml` para trocar o conjunto de regras sem tocar em TypeScript; o pacote é validado ao carregar, não é confiado. As imagens do README são geradas programaticamente por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) e podem ser reexecutadas sem risco; este plugin não tem UI, pelo que o hero é um diagrama de fluxo SVG escrito à mão (par claro/escuro, apenas tokens da superfície de comandos).
+O plugin é **orientado por dados**: `src/model.ts` declara a forma da tabela, o kit partilhado fornece o leitor e o motor de verificação, e o pacote de regras declara cada verificação. Edite `rules/*.yaml` para trocar o conjunto de regras sem tocar em TypeScript; o pacote é validado ao carregar, não é confiado. As imagens do README são geradas programaticamente por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) e podem ser reexecutadas sem risco: as capas com Pillow (zh / en × claro / escuro, quatro ficheiros) e o diagrama de estrutura como SVG escrito à mão (claro e escuro, com tokens da superfície de comandos, valores reais da amostra e anotações breves). O antigo diagrama de fluxo, a capa anterior e as imagens de demonstração permanecem em `docs/assets/` para ligações externas; o README referencia apenas o novo conjunto de capas e o par flow-v5.
 
 ## Família e agradecimentos
 

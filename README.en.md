@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-gongwen-flow-check-flow-dark.svg">
-  <img src="docs/assets/dsh-gongwen-flow-check-flow-light.svg" width="100%" alt="dsh-gongwen-flow-check data flow: receipt-and-handling register (JSON/YAML) → gongwen_flow_check reader → GF-001…GF-006 rule pack → report (found/expected/fix + skipped); differences only, no verdict, the original is never modified">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-gongwen-flow-check-hero-en-dark.webp">
+  <img src="docs/assets/dsh-gongwen-flow-check-hero-en-light.webp" width="100%" alt="dsh-gongwen-flow-check hero: the left column carries the plugin name, two value lines and the boundary note; on the right is one receipt-and-handling register (document number, title, receipt date, kind and issuer, plus a single handling-stage row whose handler cell is empty, with receipt, due and completion dates and a status), and underneath the difference list it produces: GF-001, one warn, row 1 handler is empty; GF-004, one skipped, values not configured; counters skipped 1, warn 1, error 0, under a seal that reads differences only, never a verdict">
 </picture>
 
 # dsh-gongwen-flow-check
@@ -37,6 +37,11 @@ dsh plugin --profile <name> add dsh-gongwen-flow-check
 ## What it is
 
 `dsh-gongwen-flow-check` reads one receipt-and-handling register — the document header (`docNo`, `title`, `receivedAt`, and so on) plus one row per handling step — and checks what a register can be held to mechanically: that every step fills the `handler` column, that `receivedAt` and `doneAt` parse as dates and follow each other, that a completion falls inside the deadline the register itself records in `dueAt`, that each `status` comes from the vocabulary you configure in `values`, that `docNo` is registered only once, and that the header declares both `title` and `receivedAt`. You hand it the source material (a table, register or document; Excel can be converted to JSON/YAML first, in chat if the platform supports it) and it returns a list of differences — which row, which column, what is missing. It does not decide whether handling was late, whether it should be chased, or who is accountable, and it never modifies the original.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-gongwen-flow-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-gongwen-flow-check-flow-v5-light.svg" width="100%" alt="dsh-gongwen-flow-check structure: one receipt-and-handling register (7 header fields plus 8 row columns, aliases normalized, at least one stage, status or handler column required) feeds six rules over a read-only bus. The rail above the gates records the severity ceiling: the pack has no direct basis, so error is never emitted; principle-based rules cap at warn (four rules) and institution-configured rules cap at info (two rules). In the real run of the bundled sample, GF-001 fires (row 1 handler empty, warn), GF-004 cannot run because values is unset and reports itself in skipped, and GF-002, GF-003, GF-005 and GF-006 ran clean and enter neither list; the three-state trays feed one report (error 0 / warn 1 / info 0, issueCount 1 / skippedCount 1, markdown + reportJson). The report lists differences only, the verdict stays with the reviewer, and the original is never modified">
+</picture>
 
 ## Three-step setup
 
@@ -304,7 +309,7 @@ pnpm run check:citations   # checks every rule quotation against rules/evidence/
 node ../scripts/sync-shared.mjs dsh-gongwen-flow-check   # refresh src/shared from ../_shared
 ```
 
-The plugin is **data-driven**: `src/model.ts` declares the table shape, the shared kit supplies the reader and the check engine, and the rule pack declares every check. Edit `rules/*.yaml` to switch the rule set without touching TypeScript; the pack is validated on load, not trusted. README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) and can be re-run safely; this plugin has no UI, so the hero is a hand-written SVG flow diagram (light + dark pair, command-surface tokens only).
+The plugin is **data-driven**: `src/model.ts` declares the table shape, the shared kit supplies the reader and the check engine, and the rule pack declares every check. Edit `rules/*.yaml` to switch the rule set without touching TypeScript; the pack is validated on load, not trusted. README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) and can be re-run safely: the hero banners with Pillow (zh / en × light / dark, four files) and the structure diagram as hand-written SVG (light and dark, labelled with command-surface tokens, real sample values and short annotations). The older single-skin flow diagram, hero and demo images stay in `docs/assets/` for external deep links, while the READMEs reference only the new hero set and the flow-v5 pair.
 
 ## Family and credits
 

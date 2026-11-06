@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-gongwen-flow-check-flow-dark.svg">
-  <img src="docs/assets/dsh-gongwen-flow-check-flow-light.svg" width="100%" alt="dsh-gongwen-flow-check 数据流：收文登记台账（JSON/YAML）→ gongwen_flow_check 读取 → GF-001…GF-006 规则包 → 报告（found/expected/fix + skipped）；只列差异，不下结论，原件永不修改">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-gongwen-flow-check-hero-zh-dark.webp">
+  <img src="docs/assets/dsh-gongwen-flow-check-hero-zh-light.webp" width="100%" alt="dsh-gongwen-flow-check 配图：左列是插件名、两行价值句与「只列差异、不下结论」的副标；右侧是一份收文登记台账——文号、标题、收文日期、文种机关，加上一行「承办」办理环节：承办人一栏为空，收文 2026-03-02、办理期限 2026-03-12、办结 2026-03-10、状态 已办结；下方是它产出的差异清单：GF-001 一条 warn（第 1 行 handler 为空）、GF-004 一条 skipped（values 未配置），计数 skipped 1、warn 1、error 0，并盖着「只列差异 / 不下结论」的印章">
 </picture>
 
 # dsh-gongwen-flow-check
@@ -37,6 +37,11 @@ dsh plugin --profile <name> add dsh-gongwen-flow-check
 ## 它是什么
 
 `dsh-gongwen-flow-check` 读取一份收文登记与办理环节台账——公文表头（`docNo`、`title`、`receivedAt` 等）加上每个办理环节一行——核对台账自身可以机械判定的事项：每个环节是否在 `handler` 栏填写承办人、`receivedAt` 与 `doneAt` 是否可解析为日期且先后成立、办结是否落在台账自己写入 `dueAt` 的办理期限之内、每个 `status` 是否取自你在 `values` 里配置的取值清单、`docNo` 是否只登记一次、表头是否同时声明 `title` 与 `receivedAt`。你交出原始材料（表格、清单或文书；Excel 可先转成 JSON/YAML，对话里也能代转），拿回一份「哪一行、哪一栏、差什么」的差异清单。它不判定办文是否超期、是否应当督办，也不判定由谁负责，并且绝不修改原件。
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-gongwen-flow-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-gongwen-flow-check-flow-v5-light.svg" width="100%" alt="dsh-gongwen-flow-check 结构图：左侧一份收文登记台账（表头 7 栏 + rows[] 8 栏，栏名别名归一，至少认得一个环节 / 状态 / 承办人栏）经只读总线送入 6 条规则；规则台上方是严重级上限——本规则库没有 direct 依据，因此不产生 error，原则性条款封顶 warn（4 条），本机构配置封顶 info（2 条）。以自带样例的一次真实运行为例：GF-001 命中（第 1 行承办人为空，warn），GF-004 因 values 未配置而未执行并写入 skipped，GF-002、GF-003、GF-005、GF-006 跑过而未命中，两栏都不进；右侧三态清单汇入报告（error 0 / warn 1 / info 0，issueCount 1 / skippedCount 1，markdown + reportJson），报告只列差异，结论留给复核人，原件永不修改">
+</picture>
 
 ## 三步上手
 
@@ -298,7 +303,7 @@ pnpm run check:citations   # 逐段核对规则引文与 rules/evidence/
 node ../scripts/sync-shared.mjs dsh-gongwen-flow-check   # 从 ../_shared 刷新 src/shared
 ```
 
-插件是**数据驱动**的：`src/model.ts` 声明表格形状，共享件提供读取器与检查引擎，规则包声明每一项检查。改 `rules/*.yaml` 即切换规则集，无需动 TypeScript；规则包在加载期校验，而非被信任。README 配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python + Pillow），可重复执行；本插件无 UI，hero 为手写 SVG 流程图（深浅双版，图内仅命令面 token）。
+插件是**数据驱动**的：`src/model.ts` 声明表格形状，共享件提供读取器与检查引擎，规则包声明每一项检查。改 `rules/*.yaml` 即切换规则集，无需动 TypeScript；规则包在加载期校验，而非被信任。README 配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成，可重复执行：hero 横幅用 Pillow（zh / en × 深浅共四张），结构图是手写 SVG（深浅双版，图内以命令面 token、真实样例值与简短说明标注）。旧单版流程图、旧 hero 与演示图保留在 `docs/assets/` 供外链使用，README 只引用新生成的 hero 与 flow-v5 图。
 
 ## 家族与致谢
 

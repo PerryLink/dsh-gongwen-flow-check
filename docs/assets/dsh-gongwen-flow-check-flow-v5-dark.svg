@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="660" viewBox="0 0 1100 660" role="img" aria-labelledby="title desc">
+<title id="title">dsh-gongwen-flow-check: one register, six rules, three states</title>
+<desc id="desc">A receipt-and-handling register (7 header fields plus 8 row columns) feeds six rules read from rules/gongwen-flow-check.yaml. GF-001 checks that the handler column is filled; GF-002 that receivedAt is not after doneAt; GF-003 that doneAt is not after dueAt; GF-004 that status comes from the configured values list; GF-005 that docNo appears once; GF-006 that the header declares title and receivedAt. Every gate leaves in one of three states: what it found goes to issues[] (GF-001, one warn on row 1 because handler is empty), what it could not run goes to skipped[] with its own reason (GF-004, values unset), and a rule that ran clean enters neither list (GF-002, GF-003, GF-005, GF-006). The severity rail records the real ceiling: this pack has no direct basis, so error is never emitted; principle-based rules cap at warn (four rules) and institution-configured rules cap at info (two rules). The report band carries error 0, warn 1, info 0, issueCount 1, skippedCount 1, ruleset 2026.1, markdown plus reportJson under the wording guard and disclaimer. The tool only reads file or material, never writes it, and the verdict stays with the reviewer.</desc>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0.2" y2="1"><stop offset="0" stop-color="#131a2a"/><stop offset="1" stop-color="#0c1016"/></linearGradient>
+<filter id="soft" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#000000" flood-opacity="0.52"/></filter>
+<pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1.2" cy="1.2" r="1.2" fill="#2a3346"/></pattern>
+<pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="#737b8d" stroke-width="1" opacity="0.45"/></pattern>
+</defs>
+<rect x="0" y="0" width="1100" height="660" fill="url(#bg)"/>
+<rect x="0" y="0" width="1100" height="660" fill="url(#dots)" opacity="0.5"/>
+<text x="44" y="54" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="29" xml:space="preserve" font-weight="700">dsh-gongwen-flow-check</text>
+<text x="44" y="84" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="14.5" xml:space="preserve">六条规则同读一份台账：命中的进 issues[]，跑不了的进 skipped[]，跑过没命中的两栏都不进。</text>
+<rect x="717.0" y="28" width="339.0" height="28" rx="14.0" fill="#242d42"/>
+<text x="729.0" y="46.025" fill="#8496f5" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11.5" xml:space="preserve">rules/gongwen-flow-check.yaml · v2026.1 · 6 条</text>
+<text x="44" y="108" fill="#737b8d" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">IN  ·  file | material  ·  JSON / YAML  ·  表头 7 栏 + rows[] 8 栏  ·  只读</text>
+<text x="1056" y="108" fill="#737b8d" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve" text-anchor="end">OUT  ·  issues[] · skipped[] · summary · markdown + reportJson</text>
+<line x1="44" y1="120" x2="1056" y2="120" stroke="#2b3348" stroke-width="1" opacity="0.75"/>
+<rect x="44" y="132" width="256" height="394" rx="18" fill="#1b2231" stroke="#2e374b" stroke-width="1.5" filter="url(#soft)"/>
+<text x="66" y="160" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="13" xml:space="preserve" font-weight="700">IN · 收文登记台账</text>
+<rect x="246.0" y="146" width="40.0" height="22" rx="11.0" fill="#242d42"/>
+<text x="255.0" y="160.85" fill="#8496f5" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">只读</text>
+<text x="66" y="186" fill="#737b8d" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">表头 7 栏</text>
+<text x="66" y="204" fill="#737b8d" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve">docNo</text>
+<text x="136" y="204" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11.5" xml:space="preserve">某发〔2026〕15号</text>
+<text x="66" y="222" fill="#737b8d" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve">title</text>
+<text x="136" y="222" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11.5" xml:space="preserve">关于某某工作的通知</text>
+<text x="66" y="240" fill="#737b8d" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve">receivedAt</text>
+<text x="136" y="240" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve">2026-03-02</text>
+<text x="66" y="258" fill="#737b8d" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve">docKind</text>
+<text x="136" y="258" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11.5" xml:space="preserve">通知</text>
+<text x="66" y="276" fill="#737b8d" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve">issuer</text>
+<text x="136" y="276" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11.5" xml:space="preserve">某某机关</text>
+<text x="66" y="294" fill="#737b8d" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve">dueAt</text>
+<text x="136" y="294" fill="#737b8d" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11.5" xml:space="preserve">（未填）</text>
+<text x="66" y="312" fill="#737b8d" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve">urgent</text>
+<text x="136" y="312" fill="#737b8d" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11.5" xml:space="preserve">（未填）</text>
+<line x1="66" y1="324" x2="286" y2="324" stroke="#2b3348" stroke-width="1"/>
+<text x="66" y="348" fill="#737b8d" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">rows[] · 8 栏</text>
+<rect x="66" y="356" width="36.0" height="20" rx="10.0" fill="#202839"/>
+<text x="73" y="369.85" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">序号</text>
+<rect x="112" y="356" width="36.0" height="20" rx="10.0" fill="#202839"/>
+<text x="119" y="369.85" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">环节</text>
+<rect x="158" y="356" width="47.0" height="20" rx="10.0" fill="#202839"/>
+<text x="165" y="369.85" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">承办人</text>
+<rect x="214" y="356" width="36.0" height="20" rx="10.0" fill="#202839"/>
+<text x="221" y="369.85" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">收文</text>
+<rect x="66" y="382" width="36.0" height="20" rx="10.0" fill="#202839"/>
+<text x="73" y="395.85" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">期限</text>
+<rect x="112" y="382" width="36.0" height="20" rx="10.0" fill="#202839"/>
+<text x="119" y="395.85" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">办结</text>
+<rect x="158" y="382" width="36.0" height="20" rx="10.0" fill="#202839"/>
+<text x="165" y="395.85" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">状态</text>
+<rect x="214" y="382" width="36.0" height="20" rx="10.0" fill="#202839"/>
+<text x="221" y="395.85" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">备注</text>
+<line x1="66" y1="414" x2="286" y2="414" stroke="#2b3348" stroke-width="1"/>
+<text x="66" y="436" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">别名归一：大小写 / 空格 / _ / - 不计</text>
+<text x="66" y="458" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">requireAnyOf：环节 / 状态 / 承办人</text>
+<text x="66" y="480" fill="#737b8d" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">数字可按字符串读，导出无需清洗</text>
+<text x="66" y="500" fill="#737b8d" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">至少认得一个已知栏名，否则拒读</text>
+<rect x="336" y="132" width="464" height="394" rx="18" fill="#1b2231" stroke="#2e374b" stroke-width="1.5" filter="url(#soft)"/>
+<text x="352" y="152" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="12" xml:space="preserve" font-weight="700">严重级跟着依据走：本库无 direct 依据，因此不产生 error</text>
+<rect x="346" y="162" width="130" height="30" rx="8" fill="url(#hatch)" stroke="#2b3348" stroke-width="1"/>
+<text x="352" y="176" fill="#737b8d" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11.5" xml:space="preserve" font-weight="700">direct</text>
+<text x="352" y="190" fill="#737b8d" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">本库 0 条</text>
+<rect x="452" y="172" width="10" height="9" rx="2" fill="none" stroke="#737b8d" stroke-width="1.3"/>
+<path d="M454.5 172v-3.2a3 3 0 0 1 6 0V172" fill="none" stroke="#737b8d" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>
+<line x1="486" y1="160" x2="486" y2="192" stroke="#2b3348" stroke-width="1"/>
+<text x="498" y="176" fill="#d9a441" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11.5" xml:space="preserve" font-weight="700">原则性条款</text>
+<text x="498" y="190" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">≤ warn · 4 条</text>
+<line x1="632" y1="160" x2="632" y2="192" stroke="#2b3348" stroke-width="1"/>
+<text x="644" y="176" fill="#8496f5" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11.5" xml:space="preserve" font-weight="700">本机构配置</text>
+<text x="644" y="190" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">≤ info · 2 条</text>
+<rect x="350" y="210" width="212" height="96" rx="18" fill="#1b2231" stroke="#d9a441" stroke-width="1.5" filter="url(#soft)"/>
+<rect x="351" y="222" width="4" height="72" rx="2" fill="#d9a441" opacity="0.85"/>
+<text x="366" y="236" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="14.5" xml:space="preserve" font-weight="700">GF-001</text>
+<rect x="506.0" y="220" width="42.0" height="21" rx="10.5" fill="#292217"/>
+<text x="515.0" y="234.35" fill="#d9a441" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve" font-weight="700">warn</text>
+<text x="366" y="264" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="13" xml:space="preserve">承办人 </text>
+<text x="409.0" y="264" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="13" xml:space="preserve" font-weight="700">handler</text>
+<text x="458.0" y="264" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="13" xml:space="preserve"> 必填</text>
+<text x="366" y="290" fill="#a8b1c4" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11.5" xml:space="preserve">presence</text>
+<text x="546" y="290" fill="#d9a441" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve" text-anchor="end">命中</text>
+<circle cx="520.0" cy="286.5" r="3" fill="#d9a441"/>
+<rect x="574" y="210" width="212" height="96" rx="18" fill="#1b2231" stroke="#2e374b" stroke-width="1.5" filter="url(#soft)"/>
+<rect x="575" y="222" width="4" height="72" rx="2" fill="#737b8d" opacity="0.85"/>
+<text x="590" y="236" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="14.5" xml:space="preserve" font-weight="700">GF-002</text>
+<rect x="730.0" y="220" width="42.0" height="21" rx="10.5" fill="#292217"/>
+<text x="739.0" y="234.35" fill="#d9a441" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve" font-weight="700">warn</text>
+<text x="590" y="264" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="13" xml:space="preserve" font-weight="700">receivedAt</text>
+<text x="660.0" y="264" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="13" xml:space="preserve"> ≤ </text>
+<text x="678.0" y="264" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="13" xml:space="preserve" font-weight="700">doneAt</text>
+<text x="590" y="290" fill="#a8b1c4" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11.5" xml:space="preserve">date</text>
+<text x="770" y="290" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve" text-anchor="end">未命中</text>
+<circle cx="733.0" cy="286.5" r="3" fill="#a8b1c4"/>
+<rect x="350" y="318" width="212" height="96" rx="18" fill="#1b2231" stroke="#2e374b" stroke-width="1.5" filter="url(#soft)"/>
+<rect x="351" y="330" width="4" height="72" rx="2" fill="#737b8d" opacity="0.85"/>
+<text x="366" y="344" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="14.5" xml:space="preserve" font-weight="700">GF-003</text>
+<rect x="506.0" y="328" width="42.0" height="21" rx="10.5" fill="#242d42"/>
+<text x="515.0" y="342.35" fill="#8496f5" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve" font-weight="700">info</text>
+<text x="366" y="372" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="13" xml:space="preserve" font-weight="700">doneAt</text>
+<text x="408.0" y="372" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="13" xml:space="preserve"> ≤ </text>
+<text x="426.0" y="372" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="13" xml:space="preserve" font-weight="700">dueAt</text>
+<text x="366" y="398" fill="#a8b1c4" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11.5" xml:space="preserve">date</text>
+<text x="546" y="398" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve" text-anchor="end">未命中</text>
+<circle cx="509.0" cy="394.5" r="3" fill="#a8b1c4"/>
+<rect x="574" y="318" width="212" height="96" rx="18" fill="#1b2231" stroke="#8496f5" stroke-width="1.5" stroke-dasharray="5 4" filter="url(#soft)"/>
+<rect x="575" y="330" width="4" height="72" rx="2" fill="#8496f5" opacity="0.85"/>
+<text x="590" y="344" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="14.5" xml:space="preserve" font-weight="700">GF-004</text>
+<rect x="730.0" y="328" width="42.0" height="21" rx="10.5" fill="#242d42"/>
+<text x="739.0" y="342.35" fill="#8496f5" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve" font-weight="700">info</text>
+<text x="590" y="372" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="13" xml:space="preserve" font-weight="700">status</text>
+<text x="632.0" y="372" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="13" xml:space="preserve"> ∈ </text>
+<text x="653.0" y="372" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="13" xml:space="preserve" font-weight="700">values</text>
+<text x="590" y="398" fill="#a8b1c4" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11.5" xml:space="preserve">enum</text>
+<text x="770" y="398" fill="#8496f5" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve" text-anchor="end">未执行</text>
+<circle cx="733.0" cy="394.5" r="3" fill="#8496f5"/>
+<rect x="350" y="426" width="212" height="96" rx="18" fill="#1b2231" stroke="#2e374b" stroke-width="1.5" filter="url(#soft)"/>
+<rect x="351" y="438" width="4" height="72" rx="2" fill="#737b8d" opacity="0.85"/>
+<text x="366" y="452" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="14.5" xml:space="preserve" font-weight="700">GF-005</text>
+<rect x="506.0" y="436" width="42.0" height="21" rx="10.5" fill="#292217"/>
+<text x="515.0" y="450.35" fill="#d9a441" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve" font-weight="700">warn</text>
+<text x="366" y="480" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="13" xml:space="preserve" font-weight="700">docNo</text>
+<text x="401.0" y="480" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="13" xml:space="preserve"> 唯一登记</text>
+<text x="366" y="506" fill="#a8b1c4" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11.5" xml:space="preserve">unique</text>
+<text x="546" y="506" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve" text-anchor="end">未命中</text>
+<circle cx="509.0" cy="502.5" r="3" fill="#a8b1c4"/>
+<rect x="574" y="426" width="212" height="96" rx="18" fill="#1b2231" stroke="#2e374b" stroke-width="1.5" filter="url(#soft)"/>
+<rect x="575" y="438" width="4" height="72" rx="2" fill="#737b8d" opacity="0.85"/>
+<text x="590" y="452" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="14.5" xml:space="preserve" font-weight="700">GF-006</text>
+<rect x="730.0" y="436" width="42.0" height="21" rx="10.5" fill="#292217"/>
+<text x="739.0" y="450.35" fill="#d9a441" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve" font-weight="700">warn</text>
+<text x="590" y="480" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="13" xml:space="preserve">表头声明 </text>
+<text x="646.0" y="480" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="13" xml:space="preserve" font-weight="700">title</text>
+<text x="681.0" y="480" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="13" xml:space="preserve"> · </text>
+<text x="692.0" y="480" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="13" xml:space="preserve" font-weight="700">receivedAt</text>
+<text x="590" y="506" fill="#a8b1c4" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11.5" xml:space="preserve">headerPresence</text>
+<text x="770" y="506" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve" text-anchor="end">未命中</text>
+<circle cx="733.0" cy="502.5" r="3" fill="#a8b1c4"/>
+<path d="M300 222H320V474" fill="none" stroke="#8496f5" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M320 258H327" fill="none" stroke="#8496f5" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M336 258l-10 -5v10z" fill="#8496f5"/>
+<path d="M320 366H327" fill="none" stroke="#8496f5" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M336 366l-10 -5v10z" fill="#8496f5"/>
+<path d="M320 474H327" fill="none" stroke="#8496f5" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M336 474l-10 -5v10z" fill="#8496f5"/>
+<path d="M800 200H807" fill="none" stroke="#8496f5" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M816 200l-10 -5v10z" fill="#8496f5"/>
+<path d="M800 338H807" fill="none" stroke="#8496f5" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M816 338l-10 -5v10z" fill="#8496f5"/>
+<path d="M800 465H807" fill="none" stroke="#8496f5" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M816 465l-10 -5v10z" fill="#8496f5"/>
+<rect x="816" y="132" width="240" height="136" rx="18" fill="#1b2231" stroke="#2e374b" stroke-width="1.5" filter="url(#soft)"/>
+<text x="834" y="158" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="13" xml:space="preserve" font-weight="700">issues[]</text>
+<rect x="969.0" y="144" width="73.0" height="21" rx="10.5" fill="#292217"/>
+<text x="978.0" y="158.35" fill="#d9a441" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">1 条 · warn</text>
+<line x1="834" y1="166" x2="1038" y2="166" stroke="#2b3348" stroke-width="1"/>
+<rect x="828" y="174" width="216" height="86" rx="12" fill="#292217"/>
+<text x="838" y="192" fill="#d9a441" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">GF-001 · warn · 第 1 行</text>
+<text x="838" y="212" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="12.5" xml:space="preserve">handler 为空</text>
+<text x="838" y="232" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">预期：「handler」应填写</text>
+<text x="838" y="252" fill="#737b8d" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">建议：补填承办人</text>
+<rect x="816" y="280" width="240" height="120" rx="18" fill="#1b2231" stroke="#2e374b" stroke-width="1.5" filter="url(#soft)"/>
+<text x="834" y="306" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="13" xml:space="preserve" font-weight="700">skipped[]</text>
+<rect x="1004.0" y="292" width="38.0" height="21" rx="10.5" fill="#242d42"/>
+<text x="1013.0" y="306.35" fill="#8496f5" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">1 条</text>
+<line x1="834" y1="314" x2="1038" y2="314" stroke="#2b3348" stroke-width="1"/>
+<text x="834" y="338" fill="#8496f5" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">GF-004 · enum · 未执行</text>
+<text x="834" y="360" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">未配置 values：「status」的取值</text>
+<text x="834" y="378" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">口径由本机构规定 → skipped</text>
+<text x="834" y="394" fill="#737b8d" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">本条不执行，也不静默通过</text>
+<rect x="816" y="412" width="240" height="114" rx="18" fill="#1b2231" stroke="#2e374b" stroke-width="1.5" filter="url(#soft)"/>
+<text x="834" y="438" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="13" xml:space="preserve" font-weight="700">未命中</text>
+<rect x="1004.0" y="424" width="38.0" height="21" rx="10.5" fill="#202839"/>
+<text x="1013.0" y="438.35" fill="#737b8d" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">4 条</text>
+<line x1="834" y1="446" x2="1038" y2="446" stroke="#2b3348" stroke-width="1"/>
+<rect x="834" y="458" width="50.0" height="21" rx="10.5" fill="#202839"/>
+<text x="841" y="472.35" fill="#a8b1c4" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve">GF-002</text>
+<rect x="896" y="458" width="50.0" height="21" rx="10.5" fill="#202839"/>
+<text x="903" y="472.35" fill="#a8b1c4" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve">GF-003</text>
+<rect x="958" y="458" width="50.0" height="21" rx="10.5" fill="#202839"/>
+<text x="965" y="472.35" fill="#a8b1c4" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve">GF-005</text>
+<rect x="1020" y="458" width="50.0" height="21" rx="10.5" fill="#202839"/>
+<text x="1027" y="472.35" fill="#a8b1c4" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="11" xml:space="preserve">GF-006</text>
+<text x="834" y="500" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11.5" xml:space="preserve">跑过而未命中：两栏都不进</text>
+<text x="834" y="518" fill="#737b8d" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">不等于未执行</text>
+<rect x="44" y="540" width="1012" height="90" rx="20" fill="#1b2231" stroke="#2e374b" stroke-width="1.5" filter="url(#soft)"/>
+<line x1="636" y1="554" x2="636" y2="616" stroke="#2b3348" stroke-width="1"/>
+<text x="68" y="562" fill="#737b8d" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">样例 samples/quickstart/input/GF-001-unsafe.json · report · makeReport + buildView</text>
+<text x="68" y="588" fill="#f0f3f9" font-family="Consolas,'Microsoft YaHei',ui-monospace,monospace" font-size="15" xml:space="preserve" font-weight="700">error 0 · warn 1 · info 0 · issueCount 1 · skippedCount 1</text>
+<text x="68" y="610" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">markdown + reportJson · 措辞守卫 + 免责声明 · ruleset 2026.1</text>
+<text x="660" y="566" fill="#f0f3f9" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="13.5" xml:space="preserve" font-weight="700">复核人</text>
+<text x="716" y="566" fill="#737b8d" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">结论不在报告里</text>
+<text x="660" y="590" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">不判超期 · 不判督办 · 不判责任 · 不判合规</text>
+<text x="660" y="610" fill="#737b8d" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve">报告只列差异，不定性</text>
+<text x="44" y="648" fill="#a8b1c4" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11.5" xml:space="preserve">原件永不修改：只读 file | material，不写文件、不联网、不调用模型。</text>
+<text x="1056" y="648" fill="#737b8d" font-family="'Microsoft YaHei','Segoe UI','PingFang SC','Noto Sans CJK SC',sans-serif" font-size="11" xml:space="preserve" text-anchor="end">6 条规则 · 5 种检查 · 4 warn + 2 info</text>
+</svg>

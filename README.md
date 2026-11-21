@@ -36,6 +36,10 @@ dsh plugin --profile <name> add dsh-gongwen-flow-check
 
 ## 它是什么
 
+![dsh-gongwen-flow-check 真实终端运行](docs/assets/dsh-gongwen-flow-check-demo.gif)
+
+*本仓库一次真实运行的动图回放。*
+
 `dsh-gongwen-flow-check` 读取一份收文登记与办理环节台账——公文表头（`docNo`、`title`、`receivedAt` 等）加上每个办理环节一行——核对台账自身可以机械判定的事项：每个环节是否在 `handler` 栏填写承办人、`receivedAt` 与 `doneAt` 是否可解析为日期且先后成立、办结是否落在台账自己写入 `dueAt` 的办理期限之内、每个 `status` 是否取自你在 `values` 里配置的取值清单、`docNo` 是否只登记一次、表头是否同时声明 `title` 与 `receivedAt`。你交出原始材料（表格、清单或文书；Excel 可先转成 JSON/YAML，对话里也能代转），拿回一份「哪一行、哪一栏、差什么」的差异清单。它不判定办文是否超期、是否应当督办，也不判定由谁负责，并且绝不修改原件。
 
 <picture>

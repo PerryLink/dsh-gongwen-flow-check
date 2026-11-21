@@ -116,6 +116,10 @@ register (header · handling rows) ──gongwen_flow_check──▶ rule pack G
 
 ### Examples
 
+![dsh-gongwen-flow-check: real terminal run](docs/assets/dsh-gongwen-flow-check-demo.gif)
+
+*Animated replay of a real run recorded in this repository.*
+
 These are the plugin's real entry points; install once, then call one.
 
 **Detailed output** — tool `gongwen_flow_check`, input (excerpt):

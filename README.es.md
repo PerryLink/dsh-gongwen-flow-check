@@ -43,6 +43,11 @@ dsh plugin --profile <name> add dsh-gongwen-flow-check
   <img src="docs/assets/dsh-gongwen-flow-check-flow-v5-light.svg" width="100%" alt="Estructura de dsh-gongwen-flow-check: un registro de recepción y tramitación (7 campos de cabecera y 8 columnas de fila, alias normalizados, se exige al menos una columna de fase, estado o responsable) alimenta seis reglas por un bus de solo lectura. La barra sobre las compuertas fija el techo de gravedad: el paquete no tiene base direct, así que error nunca se emite; las reglas basadas en principios se limitan a warn (cuatro) y las de configuración institucional a info (dos). En la ejecución real de la muestra, GF-001 salta (fila 1 sin responsable, warn), GF-004 no puede ejecutarse porque values no está configurado y se declara en skipped, y GF-002, GF-003, GF-005 y GF-006 se ejecutaron sin hallazgos y no entran en ninguna lista; las tres bandejas confluyen en un informe (error 0 / warn 1 / info 0, issueCount 1 / skippedCount 1, markdown + reportJson). El informe solo enumera diferencias, el veredicto queda en el revisor y el original nunca se modifica">
 </picture>
 
+![dsh-gongwen-flow-check: ejecución real de terminal](docs/assets/dsh-gongwen-flow-check-demo.gif)
+
+*Repetición animada de una ejecución real registrada en este repositorio.*
+
+
 ## Instalación en tres pasos
 
 1. **Instala**:

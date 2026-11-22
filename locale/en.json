@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Official document flow check",
-    "description": "公文流转与办理时限核对（按公开的公文处理规范核对环节完整性与时限，仅提示差异，不作出定性结论）"
+    "description": "Check a receipt-and-handling register row by row — handler filled, receipt and completion dates parse and follow each other, completion falls inside the recorded deadline, statuses come from your vocabulary, document numbers are unique, and the header names the document — and get back a list of what is inconsistent, where, and what to fix."
   }
 }

@@ -7,6 +7,8 @@
 
 # dsh-gongwen-flow-check
 
+Current version `0.2.14`.
+
 **Check a receipt-and-handling register row by row — handler filled, receipt and completion dates parse and follow each other, completion falls inside the recorded deadline, statuses come from your vocabulary, document numbers are unique, and the header names the document — and get back a list of what is inconsistent, where, and what to fix.**
 
 A check plugin for DeepSeek Harness, built for office clerks and document officers: the rule pack quotes the official-document handling regulation verbatim, reports only literal differences against the cited clauses, and never decides compliance, never assigns liability, never touches your original.
